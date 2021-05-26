@@ -45,8 +45,6 @@ var model = {
     var borradosS = model.clients[name].map((c) => c.status == borrar);
     model.clients[name] = model.clients[name].filter((c) => c.date != borrar);
     model.clients[name] = model.clients[name].filter((c) => c.status != borrar);
-    if (borrados) return borradosS;
-    else return borrados;
   },
 
   getAppointments: (name, status) => {
@@ -131,12 +129,6 @@ server.get("/api/Appointments/:name", (req, res) => {
       break;
   }
 });
-// server.get("/api/Appointments/:name/erase?", (req, res) => {
-//   const name = req.params.name;
-//   const status = req.query.date;
-//   console.log(name);
-//   console.log(status);
-// });
 
 server.get("/api/Appointments/:name/erase", (req, res) => {
   const name = req.params.name;
@@ -146,10 +138,10 @@ server.get("/api/Appointments/:name/erase", (req, res) => {
   if (!client) {
     return res.status(400).send("the client does not exist");
   }
-
   const eDelete = model.erase(name, date);
   res.send(eDelete);
 });
+
 server.get("/api/Appointments/getAppointments/:name", (req, res) => {
   const name = req.params.name;
   const status = req.query.status;
